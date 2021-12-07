@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300&family=Roboto+Slab&display=swap');
+body{
+    background-color: rgb(244,244,244);
+}
+#container{
+ margin-left: 10%;
+ margin-right:10%;
+
+}
+  .item-container {
+    margin: 20px;
+    height: 3;
+    padding: 10px;
+    background-color:white;
+    border-radius: 5px;
+    font-family: 'Outfit', sans-serif;
+    line-height: 1;
+    width: 100%;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    
+  }
+  .item-container hr{
+    height:2px;
+    border-width:0;
+    color:rgb(244,244,244);
+    background-color:rgb(244,244,244);
+  }
+  .bottom{
+      display: flex;
+    justify-content: space-between;
+    margin-right: 5%
+  }
+  .totalPrice{
+    color: rgb(34,80,199);
+  }
+  .buttons{
+      
+      margin-left: 55%;
+      margin-bottom: 1%;
+
+  }
+  .button1{
+      width: 150px ;
+      height:50px;
+      border-radius: 5px;
+      background-color:rgb(48,196,92);
+      border-style: none ;
+      color:white;
+      font-family: 'Outfit', sans-serif;
+      font-size: 20px;
+  }
+  .button2{
+      width: 150px ;
+      height:50px;
+      border-radius: 5px;
+      background-color:rgb(240,164,84);
+      border-style: none ;
+      color:white;
+      font-family: 'Outfit', sans-serif;
+      font-size: 20px;
+      margin-left: 2%;
+  }
+  .button3{
+    width: 150px ;
+    height:50px;
+    border-radius: 5px;
+    background-color:rgb(240,164,84);
+    border-style: none ;
+    color:white;
+    font-family: 'Outfit', sans-serif;
+    font-size: 20px;
+    margin-left: 2%;
+}
+
+ 
+  
