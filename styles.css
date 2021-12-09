@@ -15,7 +15,7 @@ body{
     background-color:white;
     border-radius: 5px;
     font-family: 'Outfit', sans-serif;
-    line-height: 1;
+    line-height: 0.7;
     width: 100%;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     
@@ -35,9 +35,8 @@ body{
     color: rgb(34,80,199);
   }
   .buttons{
-      
-      margin-left: 55%;
-      margin-bottom: 1%;
+      text-align: right;
+      margin-right: 3%;
 
   }
   .button1{
@@ -54,7 +53,7 @@ body{
       width: 150px ;
       height:50px;
       border-radius: 5px;
-      background-color:rgb(240,164,84);
+      background-color:rgb(256,76,76);
       border-style: none ;
       color:white;
       font-family: 'Outfit', sans-serif;
@@ -72,6 +71,105 @@ body{
     font-size: 20px;
     margin-left: 2%;
 }
+.button4{
 
- 
+  width: 150px ;
+      height:50px;
+      border-radius: 5px;
+      background-color:rgb(8,148,252);
+      border-style: none ;
+      color:white;
+      font-family: 'Outfit', sans-serif;
+      font-size: 20px;
+}
+.statusDots{
+  font-size: 30px;
+}
+
+
+#products  {
+  margin-left: 10%;
+  margin-right: 10%;
+}
+.productHeader{
+  display: flex;
+  justify-content: space-between;
+  margin-right: 5%;
+  font-weight: 20px;
+  font-size:20px;
+}
+.item-product {
+  margin: 20px;
+  height: 3;
+  padding: 10px;
+  background-color:white;
+  border-radius: 5px;
+  font-family: 'Outfit', sans-serif;
+  line-height: 1;
+  width: 100%;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  }
+  .item-product hr{
+    height:2px;
+    border-width:0;
+    color:rgb(244,244,244);
+    background-color:rgb(244,244,244);
+  }
+.statusLed{
+  display: flex;
+}
+.card {
+  margin: 20px;
+  height: 3;
+  padding: 10px;
+  background-color:white;
+  border-radius: 5px;
+  font-family: 'Outfit', sans-serif;
+  line-height: 0.7;
+  width: 80%;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   
+}
+.description{
+  line-height:1.5;
+}
+.qtyStyle{
+  margin-left: 95%;
+}
+.totalPriceProduct{
+  margin-left: 70%;
+  font-size:25px;
+  color: rgb(48,196,92);
+}
+.backButton {
+  background-color: #f8f9fa;
+  border: 1px solid #f8f9fa;
+  border-radius: 4px;
+  color: #3c4043;
+  cursor: pointer;
+  font-family: arial,sans-serif;
+  font-size: 14px;
+  height: 36px;
+  line-height: 27px;
+  min-width: 54px;
+  padding: 0 16px;
+  text-align: center;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  white-space: pre;
+}
+
+.backButton:hover {
+  border-color: #dadce0;
+  box-shadow: rgba(0, 0, 0, .1) 0 1px 1px;
+  color: #202124;
+}
+
+.backButton:focus {
+  border-color: #4285f4;
+  outline: none;
+}
+.customerInfo{
+  margin-left: 2%;
+}
