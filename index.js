@@ -13,7 +13,7 @@ async function createHtml() {
   const data = await getData('https://orders-testing-api.herokuapp.com/api/v1/orders')
   const container = document.getElementById('container')
   let html = "";
-
+  
   for(let i = 0; i < data.length; i++) {
     html += `<div class='item-container'>`
     switch (data[i].status){
