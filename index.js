@@ -1,22 +1,38 @@
+let data = []
+var storageKey = 'data';
+
 async function getData(url) {
-  try {
-    const res = await fetch(url)
-    const data = await res.json()
-    return data
-  } catch (error) {
-    console.log("error", error);
-    return []
+  const dataStorage = JSON.parse(localStorage.getItem(storageKey))
+  if (dataStorage && dataStorage.length > 0) {
+    console.log('From local storage')
+    return dataStorage
+  } else {
+    console.log('From API')
+    try {
+      const res = await fetch(url)
+      return await res.json()
+    } catch (error) {
+      console.log("error", error);
+      return []
+    }
   }
 }
 
 async function createHtml() {
-  const data = await getData('https://orders-testing-api.herokuapp.com/api/v1/orders')
+  if (data.length === 0) {
+    data = await getData('https://orders-testing-api.herokuapp.com/api/v1/orders')
+  }
   const container = document.getElementById('container')
   let html = "";
-  
-  for(let i = 0; i < data.length; i++) {
+  html += `<form action="" class="search-bar">
+	<input type="search" name="search" pattern=".*\S.*" required>
+	<button class="search-btn" type="submit">
+		<span>Search</span>
+	</button>
+</form>`
+  for (let i = 0; i < data.length; i++) {
     html += `<div class='item-container'>`
-    switch (data[i].status){
+    switch (data[i].status) {
       case 0:
         html += `<p class='statusDots' style="color: rgb(256,172,4)">●</p>`
         break;
@@ -36,21 +52,22 @@ async function createHtml() {
     html += `<p>Delivery Location</p><h4>${data[i].delivaddr}</h4>`
     html += `<hr><div class='bottom'><div class='smallBottom1'><p>Delivery Date</p><h4>${data[i].deliverydate}</h4></div>`
     html += `<div class='smallBottom2'><p>Total Amount</p><h4 class='totalPrice'>${data[i].totalprice} €</h4></div></div>`
-    switch (data[i].status){
+    switch (data[i].status) {
       case 0:
-        html += `<div class='buttons'><input class='button1'type='button' value='Accept' onclick='accept()'>`
-        html += `<input class='button3'type='button' value='Detail' onclick='getProduct(${data[i].orderid})'><input class='button2'type='button' value='Cancel' onclick='cancel()'></div>`
+        html += `<div class='buttons'>
+        <input class='button1' type='button' value='Accept' onclick='acceptHandler(${data[i].orderid})'>`
+        html += `<input class='button3'type='button' value='Detail' onclick='getProduct(${data[i].orderid})'><input class='button2' type='button' value='Cancel' onclick='cancelHandler(${data[i].orderid})'></div>`
         break;
       case 1:
-        html +=`<div class='buttons'><input class='button4'type='button' value='Pick Up' onclick='picked()'>`
-        html += `<input class='button3'type='button' value='Detail' onclick='getProduct(${data[i].orderid})'><input class='button2'type='button' value='Cancel' onclick='cancel()'></div>`
+        html += `<div class='buttons'><input class='button4'type='button' value='Pick Up' onclick='pickupHandler(${data[i].orderid})'>`
+        html += `<input class='button3'type='button' value='Detail' onclick='getProduct(${data[i].orderid})'><input class='button2'type='button' value='Cancel' onclick='cancelHandler(${data[i].orderid})'></div>`
         break;
       case 2:
-        html +=`<div class='buttons'>`
-        html += `<input class='button3'type='button' value='Detail' onclick='getProduct(${data[i].orderid})'><input class='button2'type='button' value='Cancel' onclick='cancel()'></div>`
+        html += `<div class='buttons'>`
+        html += `<input class='button3'type='button' value='Detail' onclick='getProduct(${data[i].orderid})'><input class='button2'type='button' value='Cancel' onclick='cancelHandler(${data[i].orderid})'></div>`
         break;
       case 3:
-        html +=`<div class='buttons'>`
+        html += `<div class='buttons'>`
         html += `<input class='button3'type='button' value='Detail' onclick='getProduct(${data[i].orderid})'></div>`
         break;
     };
@@ -59,7 +76,6 @@ async function createHtml() {
   container.innerHTML = html
 }
 async function getProduct(orderid) {
-  const data = await getData('https://orders-testing-api.herokuapp.com/api/v1/orders')
   const order = data.find(x => x.orderid == orderid)
   const products = order.products
   const productsContainer = document.getElementById('products')
@@ -67,52 +83,52 @@ async function getProduct(orderid) {
   container.style.display = "none"
   let html = "";
   html += `<div class="item-product">`
-  
-  html +=`<div class="productHeader">`
-  html +=`<input type="button" value='Back' class='backButton'onclick='backToMain()'`
-  html +=`<h2>Order ID: ${orderid}</h2>`
-  html +='</div>'
+
+  html += `<div class="productHeader">`
+  html += `<input type="button" value='Back' class='backButton'onclick='backToMain()'`
+  html += `<h2>Order ID: ${orderid}</h2>`
+  html += '</div>'
   html += `<hr>`
-  switch (order.status){
+  switch (order.status) {
     case 0:
       html += `<p class='statusDots' style="color: rgb(256,172,4)">●</p>`
-      html +=`<h3>Order Status: Pending </h3>`
+      html += `<h3>Order Status: Pending </h3>`
       break;
     case 1:
       html += `<p  class='statusDots' style="color: rgb(80,212,140">●</p>`
-      html +=`<h3>Order Status: Ready </h3>`
+      html += `<h3>Order Status: Ready </h3>`
       break;
     case 2:
       html += `<p class='statusDots' style="color: rgb(8,148,252)">●</p>`
-      html +=`<h3>Order Status: Picked </h3>`
+      html += `<h3>Order Status: Picked </h3>`
       break;
     case 3:
       html += `<p class='statusDots' style="color: rgb(256,76,76)">●</p>`
-      html +=`<h2>Order Status: Cancelled </h2>`
+      html += `<h2>Order Status: Cancelled </h2>`
       break;
   };
-  html +=`<hr><h3>Customer Information</h3>`
-  html +=`<div class='customerInfo'>`
-  html +=`<p>Name: ${order.customer}`
-  
-  html +=`<p>Delivery Address: ${order.delivaddr}`
-  html +=`<p>Invoice Address: ${order.customer}`
-  html +=`<p>ID: ${order.customerid}`
-  html +=`<p>Customer Notes: ${order.comment}</p><br/>`
-  html +=`</div>`
-  html +=`<hr>`
-  html +=`<h3>Orders</h3>`
-  for ( let i=0; i< products.length; i++ ){
-    html +=`<div class='card'>`
-    html +=`<h4>${products[i].product}</h4>`
-    html +=`<p class='description'>${products[i].description}</p>`
-    html +=`<p>Code: ${products[i].code} | Shelf Pos: ${products[i].shelf_pos} | Supplier Code: ${products[i].suppliercode} </p>`
-    html +=`<p>Unit Price: ${products[i].unit_price}</p>`
-    html +=`<p class='qtyStyle'>x ${products[i].qty}</p>`
+  html += `<hr><h3>Customer Information</h3>`
+  html += `<div class='customerInfo'>`
+  html += `<p>Name: ${order.customer}`
+
+  html += `<p>Delivery Address: ${order.delivaddr}`
+  html += `<p>Invoice Address: ${order.customer}`
+  html += `<p>ID: ${order.customerid}`
+  html += `<p>Customer Notes: ${order.comment}</p><br/>`
+  html += `</div>`
+  html += `<hr>`
+  html += `<h3>Orders</h3>`
+  for (let i = 0; i < products.length; i++) {
+    html += `<div class='card'>`
+    html += `<h4>${products[i].product}</h4>`
+    html += `<p class='description'>${products[i].description}</p>`
+    html += `<p>Code: ${products[i].code} | Shelf Pos: ${products[i].shelf_pos} | Supplier Code: ${products[i].suppliercode} </p>`
+    html += `<p>Unit Price: ${products[i].unit_price}</p>`
+    html += `<p class='qtyStyle'>x ${products[i].qty}</p>`
     html += `</div>`
   }
-  html +=`<h3 class='totalPriceProduct'>Total Price : ${order.totalprice}€ `
-  html +=`<hr>`
+  html += `<h3 class='totalPriceProduct'>Total Price : ${order.totalprice}€ `
+  html += `<hr>`
   html += `</div>`
   productsContainer.innerHTML = html
 }
@@ -121,5 +137,23 @@ function backToMain() {
   container.style.display = "grid"
   createHtml()
 }
+function acceptHandler(orderid) {
+  const id = data.findIndex(x => x.orderid == orderid)
+  data[id].status = 1;
+  localStorage.setItem(storageKey, JSON.stringify(data));
+  createHtml()
 
+}
+function pickupHandler(orderid) {
+  const id = data.findIndex(x => x.orderid == orderid)
+  data[id].status = 2;
+  localStorage.setItem(storageKey, JSON.stringify(data));
+  createHtml()
+}
+function cancelHandler(orderid) {
+  const id = data.findIndex(x => x.orderid == orderid)
+  data[id].status = 3;
+  localStorage.setItem(storageKey, JSON.stringify(data));
+  createHtml()
+}
 createHtml()
