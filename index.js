@@ -3,7 +3,7 @@ var storageKey = 'data';
 
 async function getData(url) {
   const dataStorage = JSON.parse(localStorage.getItem(storageKey))
-  if (dataStorage && dataStorage.length > 0) {
+  if (dataStorage) {
     console.log('From local storage')
     return dataStorage
   } else {
@@ -19,17 +19,11 @@ async function getData(url) {
 }
 
 async function createHtml() {
-  if (data.length === 0) {
+  if (!data) {
     data = await getData('https://orders-testing-api.herokuapp.com/api/v1/orders')
   }
   const container = document.getElementById('container')
   let html = "";
-  html += `<form action="" class="search-bar">
-	<input type="search" name="search" pattern=".*\S.*" required>
-	<button class="search-btn" type="submit">
-		<span>Search</span>
-	</button>
-</form>`
   for (let i = 0; i < data.length; i++) {
     html += `<div class='item-container'>`
     switch (data[i].status) {
@@ -73,7 +67,9 @@ async function createHtml() {
     };
     html += `</div>`
   };
-  container.innerHTML = html
+  container.innerHTML = html 
+  const searchInput = document.getElementById('searchInput')
+  searchInput.addEventListener('input',textChange)
 }
 async function getProduct(orderid) {
   const order = data.find(x => x.orderid == orderid)
@@ -114,7 +110,6 @@ async function getProduct(orderid) {
   html += `<p>Delivery Address: ${order.delivaddr}`
   html += `<p>Invoice Address: ${order.customer}`
   html += `<p>ID: ${order.customerid}`
-  html += `<p>Customer Notes: ${order.comment}</p><br/>`
   html += `</div>`
   html += `<hr>`
   html += `<h3>Orders</h3>`
@@ -129,9 +124,16 @@ async function getProduct(orderid) {
   }
   html += `<h3 class='totalPriceProduct'>Total Price : ${order.totalprice}€ `
   html += `<hr>`
+  html += `<h3 class='noteText'>Notes:</h3>`
+  html += `<p class='noteText'>${order.comment}</p>`
+  html += `<input class='textInput' type='text' id='noteInput'>`
+  html += `<input class='submitButton'type='button' value='Submit' onclick='noteSubmit(${order.comment})'>`
+
   html += `</div>`
   productsContainer.innerHTML = html
+ 
 }
+
 function backToMain() {
   const container = document.getElementById('container')
   container.style.display = "grid"
@@ -155,5 +157,19 @@ function cancelHandler(orderid) {
   data[id].status = 3;
   localStorage.setItem(storageKey, JSON.stringify(data));
   createHtml()
+}
+function searchId(){
+  
+  const order = data.find(x => x.orderid == searchId)
+  console.log(order)
+  createHtml()
+}
+function textChange(event){
+  if (event.target && event.target.value){
+    console.log(event.target.value)
+    data = data.filter(order => order.orderid.toString().includes(event.target.value))
+    console.log(data)
+    createHtml()
+  }
 }
 createHtml()
