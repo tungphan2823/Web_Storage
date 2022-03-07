@@ -8,7 +8,14 @@ body{
  margin-right:10%;
 
 }
-  .item-container {
+.searchStyle{
+ margin-left: 12%;
+ height: 30px;
+ width: 15%;
+ font-family: 'Outfit', sans-serif;
+
+}
+.item-container {
     margin: 20px;
     height: 3;
     padding: 10px;
@@ -181,3 +188,4 @@ body{
   margin-left: 1%;
   font-family: 'Outfit', sans-serif;
 }
+/* search */

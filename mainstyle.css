@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300&family=Roboto+Slab&display=swap');
+body{
+    background-image: url(codeimg.jpg);  
+}
+.loginPart{
+    height: 3;
+    padding: 10px;
+    background-color:rgb(244,244,244);
+    border-radius: 5px;
+    font-family: 'Outfit', sans-serif;
+    line-height: 0.7;
+    width:25%;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    justify-content: center;
+    text-align: center;
+    margin-left: 36%;
+    margin-top: 15%;
+    background-size: 30px 50px;
+}
+.loginPart input{
+    height:40px;
+    margin-top: 2%;
+    width:70%;
+    border-width: 2px;
+    border-radius: 5px;
+    font-size: 17px;
+}
+.loginPart h3{
+    font-size:25px;
+}
