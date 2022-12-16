@@ -24,7 +24,7 @@ async function createHtml(dataInput) {
     dataForHtml = dataInput
   }
   else {
-    data = await getData('https://orders-testing-api.herokuapp.com/api/v1/orders')
+    data = await getData('https://order-test-api.vercel.app/api/v1/orders')
     dataForHtml = data
   }
   const container = document.getElementById('container')
