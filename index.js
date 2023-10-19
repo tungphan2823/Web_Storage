@@ -161,7 +161,7 @@ function pickupHandler(orderid) {
   createHtml()
 }
 function cancelHandler(orderid) {
-  const id = data.findIndex(x => x.orderid == orderid)
+  const id = data.findIndex(x => x.orderid == orderid);
   data[id].status = 3;
   localStorage.setItem(storageKey, JSON.stringify(data));
   createHtml()
